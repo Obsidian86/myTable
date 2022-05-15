@@ -62,7 +62,7 @@ export default function App() {
           perPage={10}
           checkbox
           sort={["addr", "DESC"]}
-          hiddenCols={["amount"]}
+          hiddenCols={[]}
         />
       </div>
     </div>

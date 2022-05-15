@@ -4,8 +4,17 @@ import { ASC, DESC } from "../constants";
 import ScrollingCheckList from "./ScrollCheckList";
 import FloatMenu from "./FloatMenu";
 
-const DropDownMenu = ({ attribute, handleUpdateSortOrder, optionsList }) => {
+const DropDownMenu = ({ attribute, handleUpdateSortOrder, optionsList, onListChange, right, selected = [] }) => {
   const [searchText, updateSearchText] = useState("");
+  const [selectedItems, updateSelectedItems] = useState(selected)
+
+  const handleListChange = option => {
+    const updatedList = selectedItems.includes(option.value)
+      ? [...selectedItems].filter(o => o !== option.value)
+      : [...selectedItems, option.value]
+    updateSelectedItems(updatedList)
+    onListChange(updatedList)
+  }
 
   const filteredOptions = Array.from(
     new Set(
@@ -18,7 +27,7 @@ const DropDownMenu = ({ attribute, handleUpdateSortOrder, optionsList }) => {
   );
 
   return (
-    <FloatMenu>
+    <FloatMenu right={right}>
       <StyledDropDownMenu>
         <button onClick={() => handleUpdateSortOrder(attribute, ASC)}>
           Sort A -&gt; Z
@@ -35,13 +44,13 @@ const DropDownMenu = ({ attribute, handleUpdateSortOrder, optionsList }) => {
         <span>
           <span className="link-btn">Select All</span>
           <span className="link-btn" onClick={() => updateSearchText("")}>
-            Clear{" "}
+            Clear
           </span>
         </span>
         <ScrollingCheckList
           options={filteredOptions.map((o) => ({ value: o, label: o }))}
-          handleChange={(o) => console.log(o)}
-          checkedItems={[]}
+          handleChange={handleListChange}
+          checkedItems={selectedItems}
           maxHeight="200px"
         />
       </StyledDropDownMenu>

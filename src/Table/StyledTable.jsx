@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const MENU_COL_WIDTH = "15px";
+const MENU_COL_WIDTH = "25px";
 const CHECKBOX_CELL_WIDTH = "25px";
 
 const StyledTable = styled.div`
@@ -34,10 +34,8 @@ const StyledTable = styled.div`
       z-index: 4;
       & .table-cell {
         position: relative;
-        padding: 0;
         .header-button {
           display: block;
-          padding: 5px 10px;
           cursor: pointer;
           &:hover {
             background-color: rgba(0, 0, 0, 0.3);
@@ -51,7 +49,7 @@ const StyledTable = styled.div`
           ${(p) => (p.checkbox ? CHECKBOX_CELL_WIDTH : "0px")}
       );
       text-align: right;
-      padding: 6px;
+      margin: 0;
       &.first-data-cell {
         text-align: left;
       }
@@ -59,9 +57,17 @@ const StyledTable = styled.div`
     &.component-row .table-cell {
       width: calc(100% - ${(p) => (p.checkbox ? CHECKBOX_CELL_WIDTH : "0px")});
     }
+    .data-cell, .header-button {
+      display: block;
+      padding: 10px;
+    }
     & .table-cell {
       &.checkbox-cell {
         width: ${CHECKBOX_CELL_WIDTH};
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
       &.table-menu-column {
         width: ${MENU_COL_WIDTH};

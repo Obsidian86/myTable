@@ -13,12 +13,11 @@ const TableFooter = ({
     <StyledTableFooter>
       <span>
         Items per page:
-        <select onChange={handleItemsPerPageChange}>
+        <select onChange={handleItemsPerPageChange} value={itemsPerPage}>
           {displayCount.map((option) => (
             <option
               value={option}
               key={option}
-              selected={parseInt(itemsPerPage) === parseInt(option)}
             >
               {option}
             </option>

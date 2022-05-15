@@ -1,6 +1,6 @@
 const CheckBoxCell = ({ checked, onClick }) => (
   <span className="table-cell checkbox-cell">
-    <input type="checkbox" onClick={onClick} checked={checked} />
+    <input type="checkbox" onChange={onClick} checked={checked} />
   </span>
 );
 

@@ -13,8 +13,8 @@ const ScrollingCheckList = ({
           <label key={option.value || option.label}>
             <input
               type="checkbox"
-              checked={!checkedItems.includes(option.value)}
-              onClick={() => handleChange(option)}
+              checked={checkedItems.includes(option.value)}
+              onChange={() => handleChange(option)}
             />
             {option.label}
           </label>

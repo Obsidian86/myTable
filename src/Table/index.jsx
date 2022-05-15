@@ -4,7 +4,7 @@ import CheckBoxCell from "./components/CheckboxCell";
 import TableFooter from "./components/TableFooter";
 import DropDownMenu from "./components/DropDownMenu";
 import ScrollingCheckList from "./components/ScrollCheckList";
-import { tableSort } from "./functions";
+import { tableSort, klass } from "./functions";
 import * as constants from "./constants";
 import FloatMenu from "./components/FloatMenu";
 
@@ -28,7 +28,7 @@ const Table = ({
   const [itemsPerPage, updateItemsPerPage] = React.useState(perPage);
   const [openMenu, updateOpenMenu] = React.useState(null);
   const [hiddenColumns, updateHiddenColumns] = React.useState(hiddenCols);
-  const [selectedMenuItems, updateSelectedMenuItems] = React.useState({});
+  const [selectedMenuFilters, updateselectedMenuFilters] = React.useState({});
   /* ------------ */
   /* --- Vars --- */
   /* ------------ */
@@ -40,7 +40,7 @@ const Table = ({
   // columns
   const processedColumns =
     hiddenColumns.length > 0
-      ? [...columns].filter((col) => !hiddenColumns.includes(col.attribute))
+      ? [...columns].filter(col => !hiddenColumns.includes(col.attribute))
       : [...columns];
   const showMainMenu = true;
   const showRowMenus = false;
@@ -61,20 +61,16 @@ const Table = ({
         [dataKey]: `_row_key_${index}`
       };
       if (showMainMenu) {
-        rowItem[constants.MAIN_MENU_KEY] = showRowMenus ? (
-          <button>:</button>
-        ) : (
-          ""
-        );
+        rowItem[constants.MAIN_MENU_KEY] = showRowMenus
+          ? <button>:</button>
+          : ""
       }
       return rowItem;
     });
   }
   // Get the rows displayed in current page
-  displayRows = tableSort(displayRows, sortOrder).slice(
-    end - itemsPerPage,
-    end
-  );
+  displayRows = tableSort(displayRows, sortOrder)
+    .slice(end - itemsPerPage, end);
 
   /* ----------------- */
   /* --- UseEffect --- */
@@ -88,6 +84,12 @@ const Table = ({
   /* ----------------- */
   /* --- Functions --- */
   /* ----------------- */
+  const  handleFilterMenuListChange = (attr, list) => 
+    updateselectedMenuFilters({
+      ...selectedMenuFilters,
+      [attr]: list
+    })
+
   const handleHiddenColCheck = (attr) => {
     updateHiddenColumns(
       hiddenColumns.includes(attr)
@@ -147,6 +149,19 @@ const Table = ({
     changePage(1);
     updateItemsPerPage(parseInt(e.target.value));
   };
+
+  /* --- Filter --- */
+  const filteredRows = Object.keys(selectedMenuFilters).length > 0
+    ? [...displayRows].filter(row  => {
+      let canAdd = true
+      Object.keys(selectedMenuFilters).forEach(key => {
+        const hasMatchInGroup = selectedMenuFilters[key].includes(row[key])
+        if (!hasMatchInGroup) canAdd = false
+      })
+      return canAdd
+    })
+    : displayRows
+
   /* ------------ */
   /* --- View --- */
   /* ------------ */
@@ -164,17 +179,12 @@ const Table = ({
           />
         )}
         {processedColumns.map((col, index) => (
-          <span
-            className={`
-              open-menu
-              table-cell
-              ${
-                col.attribute === constants.MAIN_MENU_KEY
-                  ? "table-menu-column"
-                  : ""
-              }
-              ${index === 0 ? "first-data-cell" : ""}
-            `}
+          <span {...klass({
+              "open-menu table-cell": true,
+              "first-data-cell": index === 0,
+              "table-menu-column": col.attribute === constants.MAIN_MENU_KEY
+            })}
+            key={col.attribute}
           >
             <span
               className="header-button open-menu"
@@ -193,7 +203,7 @@ const Table = ({
             </span>
             {openMenu === col.attribute ? (
               openMenu === constants.MAIN_MENU_KEY ? (
-                <FloatMenu>
+                <FloatMenu right>
                   <ScrollingCheckList
                     options={columns.map((o) => ({
                       value: o.attribute,
@@ -206,8 +216,11 @@ const Table = ({
                 </FloatMenu>
               ) : (
                 <DropDownMenu
+                  right={index !== 0}
                   attribute={col.attribute}
                   handleUpdateSortOrder={handleUpdateSortOrder}
+                  onListChange={data => handleFilterMenuListChange(col.attribute, data)}
+                  selected={selectedMenuFilters[col.attribute] || []}
                   optionsList={displayRows.reduce((prev, curr) => {
                     prev.push(curr[col.attribute] || null);
                     return prev;
@@ -218,29 +231,28 @@ const Table = ({
           </span>
         ))}
       </div>
-      {displayRows.map((row) =>
+      {filteredRows.map((row) =>
         row.component ? (
-          <div
-            className={`table-row component-row ${
-              selectedItems.includes(row[dataKey]) ? "selected-row" : ""
-            }`}
+          <div {...klass({
+              "table-row component-row": true,
+              "selected-row": selectedItems.includes(row[dataKey])
+            })}
+            key={row[dataKey]}
           >
-            {checkbox && (
-              <CheckBoxCell
+            {checkbox && <CheckBoxCell
                 onClick={() => handleSelectRowChange(false, row)}
                 checked={selectedItems.includes(row[dataKey])}
               />
-            )}
+            }
             <span className="table-cell">{row.component}</span>
-            <span className={`table-cell table-menu-column `} />
+            <span className={`table-cell table-menu-column`} />
           </div>
         ) : (
-          <div
-            className={`
-              table-row ${
-                selectedItems.includes(row[dataKey]) ? "selected-row" : ""
-              }
-              `}
+          <div {...klass({
+              'table-row': true,
+              'selected-row': selectedItems.includes(row[dataKey])
+            })}
+            key={row[dataKey]}
           >
             {checkbox && (
               <CheckBoxCell
@@ -249,18 +261,14 @@ const Table = ({
               />
             )}
             {processedColumns.map((col, index) => (
-              <span
-                className={`
-                table-cell
-                ${index === 0 ? "first-data-cell" : ""}
-                ${
-                  col.attribute === constants.MAIN_MENU_KEY
-                    ? "table-menu-column"
-                    : ""
-                }
-              `}
+              <span { ...klass({
+                  'table-cell': true,
+                  "first-data-cell": index === 0,
+                  "table-menu-column": col.attribute === constants.MAIN_MENU_KEY
+                }) }
+                key={`${row[dataKey]}-${col.attribute}`}
               >
-                {row[col.attribute]}
+                <span className='data-cell'>{row[col.attribute]}</span>
               </span>
             ))}
           </div>
