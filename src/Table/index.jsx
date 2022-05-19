@@ -200,6 +200,11 @@ const Table = ({
                   ? "- ^"
                   : "- v"
                 : ""}
+              <i {...klass({
+                'filter-icon': true,
+                'filter-active': sortOrder[0] === col.attribute
+                  || selectedMenuFilters?.[col.attribute]?.length > 0
+              })}>F</i>
             </span>
             {openMenu === col.attribute ? (
               openMenu === constants.MAIN_MENU_KEY ? (

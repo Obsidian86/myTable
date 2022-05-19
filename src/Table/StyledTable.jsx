@@ -41,6 +41,12 @@ const StyledTable = styled.div`
             background-color: rgba(0, 0, 0, 0.3);
           }
         }
+        .filter-icon {
+          border: 1px solid red;
+          &.filter-active {
+            background-color: red;
+          }
+        }
       }
     }
     & .table-cell {
