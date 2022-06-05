@@ -5,14 +5,29 @@ import Icon from '../Icon';
 export default {
   title: 'Button',
   component: Button,
+  argTypes: {
+    color: {
+      options: ['good', 'bad', 'clear'],
+    }
+  }
 };
 
-export const Primary = () =>
-    <Button>Button</Button>;
+const BaseButton = args => <Button {...args} />
 
-export const WithIcon = () =>
-    <Button
-      icon={<Icon icon={<>x</>} circle />}
-    >
-      Button
-    </Button>;
+export const BasicButton = BaseButton.bind({})
+BasicButton.args = {
+  label: 'Basic button'
+}
+
+export const ButtonWithIcon = BasicButton.bind({})
+ButtonWithIcon.args = {
+  icon: <Icon icon={<>x</>} circle />,
+  label: 'Button with icon'
+}
+
+export const RedButtonWithIcon = BasicButton.bind({})
+RedButtonWithIcon.args = {
+  icon: <Icon icon={<>x</>} circle />,
+  label: 'Red Button with icon',
+  color: 'bad'
+}

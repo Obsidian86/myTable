@@ -1,10 +1,11 @@
 import styled from 'styled-components'
 import klass from '../../functions/klass'
 import THEME from '../../styles/theme'
+import PropTypes from 'prop-types';
 
 const id = '__button'
 
-export default ({
+const Button = ({
     label = 'Submit',
     icon = null,
     onClick,
@@ -19,6 +20,16 @@ export default ({
         {label}
     </StyledButton>
 }
+
+Button.proptypes = {
+    label: PropTypes.string,
+    icon: PropTypes.node,
+    onClick: PropTypes.func,
+    color: PropTypes.oneOf(['good', 'bad', 'clear']),
+    circle: PropTypes.bool,
+}
+
+export default Button
 
 const StyledButton = styled.button`
     border: none;
