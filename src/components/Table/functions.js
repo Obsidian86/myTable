@@ -17,11 +17,3 @@ export const tableSort = (rows, sort) => {
     return -1;
   });
 };
-
-export const klass = (obj, list = '') => {
-  let classList = `${list}`
-  Object.keys(obj).forEach(k => {
-    if (obj[k]) classList = `${classList} ${k}`
-  })
-  return { className: classList }
-}

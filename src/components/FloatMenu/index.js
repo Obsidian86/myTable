@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'; 
 import styled from "styled-components";
+import klass from '../../functions/klass';
+import THEME from '../../styles/theme'
 
 const FloatMenu = ({ children, right }) => {
   const [mounted, updateMounted] = useState(false)
@@ -11,7 +13,7 @@ const FloatMenu = ({ children, right }) => {
   })
 
   return <StyledFloatMenu
-    className={`drop-down-menu ${mounted ? 'menu-mounted' : ''}`}
+    { ...klass({ 'menu-mounted' : mounted  }, 'drop-down-menu')}
     right={right}
   >
     {children}
@@ -19,18 +21,17 @@ const FloatMenu = ({ children, right }) => {
 }
 
 const StyledFloatMenu = styled.div`
-  font-size: 14px;
   position: absolute;
   left: ${p => p.right ? 'auto' : '1px'};
   right: ${p => p.right ? '1px' : 'auto'};
-  top: 38px;
   z-index: 5;
   background-color: #fff;
-  box-shadow: 0 0 3px gray;
+  box-shadow: ${THEME.shadow.sm};
   text-align: left;
   width: 0;
-  transition: all .1s;
+  transition: all ${THEME.trans.xsm};
   overflow: hidden;
+  border-radius: ${THEME.radius.sm};
   max-height: 0;
   &.menu-mounted {
     width: 250px;

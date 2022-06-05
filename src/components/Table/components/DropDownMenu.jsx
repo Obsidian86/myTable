@@ -2,7 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { ASC, DESC } from "../constants";
 import ScrollingCheckList from "./ScrollCheckList";
-import FloatMenu from "./FloatMenu";
+import FloatMenu from "../../FloatMenu";
 
 const DropDownMenu = ({ attribute, handleUpdateSortOrder, optionsList, onListChange, right, selected = [] }) => {
   const [searchText, updateSearchText] = useState("");

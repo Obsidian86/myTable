@@ -4,9 +4,10 @@ import CheckBoxCell from "./components/CheckboxCell";
 import TableFooter from "./components/TableFooter";
 import DropDownMenu from "./components/DropDownMenu";
 import ScrollingCheckList from "./components/ScrollCheckList";
-import { tableSort, klass } from "./functions";
+import { tableSort } from "./functions";
+import klass from "../../functions/klass";
 import * as constants from "./constants";
-import FloatMenu from "./components/FloatMenu";
+import FloatMenu from "../FloatMenu";
 
 const Table = ({
   columns,
@@ -15,7 +16,7 @@ const Table = ({
   headerColor = "#8fcc99",
   checkbox = false,
   primaryKey = null,
-  sort = null,
+  sort = [],
   displayCount = [25, 50, 100],
   hiddenCols = []
 }) => {
