@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import klass from '../../functions/klass';
 import THEME from '../../styles/theme';
 import Button from '../Button';
-import Icon from '../Icon';
 
 const id = '__modal'
 
@@ -17,10 +16,14 @@ export default ({
     const [mounted, updateMounted] = React.useState(false)
     const [unMounted, updateUnMounted] = React.useState(false)
 
+    const keyListener = e => e.key === 'Escape' && handleCloseClick()
+
     React.useEffect(() => {
+        document.addEventListener('keydown', keyListener)
         !mounted && !unMounted && setTimeout(() => {
             updateMounted(true)
         }, 1)
+        return () => document.removeEventListener('keydown', keyListener)
     })
 
     const handleCloseClick = () => {

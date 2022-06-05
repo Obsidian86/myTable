@@ -23,8 +23,8 @@ export default {
         xl: '18px',
     },
     trans: {
-        xsm: '.1s',
-        sm: '.2s',
+        xsm: '.05s',
+        sm: '.1s',
     },
     theme: {
         good: COLORS.green,
