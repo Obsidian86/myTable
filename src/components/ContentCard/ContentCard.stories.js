@@ -1,6 +1,8 @@
 import React from "react";
 import ContentCard from ".";
+import Cols from "../Cols";
 import Icon from "../Icon/";
+import Well from "../Well";
 
 export default {
   title: "ContentCard",
@@ -17,7 +19,18 @@ const BaseContentCard = (args) => (
       padding: "10px 0",
     }}
   >
-    <ContentCard {...args} icon={<Icon icon="x" />} />
+    <ContentCard {...args} icon={<Icon icon="x" />}>
+      <>
+        <Cols cols={2}>
+          <span>alksdasdlj</span>
+          <span>alksdasdlj</span>
+          <span>alksdasdlj</span>
+          <span>alksdasdlj</span>
+        </Cols>
+        <Well>well content here</Well>
+        <span>alksdasdlj</span>
+      </>
+    </ContentCard>
   </div>
 );
 
