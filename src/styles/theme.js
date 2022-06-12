@@ -31,6 +31,7 @@ export default {
         goodAction: COLORS.darkGreen,
         bad: COLORS.red,
         badAction: COLORS.darkRed,
+        badDisabled: COLORS.lightRed,
         bright: COLORS.white,
         medium: COLORS.gray,
         mediumLight: COLORS.lightGray,

@@ -1,18 +1,21 @@
 import React from 'react';
 import ContentCard from '.';
-import Icon from '../Icon';
 
 export default {
   title: 'ContentCard',
   component: ContentCard,
   argTypes: {
-    color: {
-      options: ['good', 'bad', 'clear'],
-    }
   }
 };
 
-const BaseContentCard = args => <ContentCard {...args} />
+const BaseContentCard = args => <div style={{
+  backgroundColor: 'gray',
+  height: '100vh',
+  margin: '0',
+  padding: '10px 0'
+}}>
+    <ContentCard {...args} />
+  </div>
 
 export const BasicContentCard = BaseContentCard.bind({})
 BasicContentCard.args = {
