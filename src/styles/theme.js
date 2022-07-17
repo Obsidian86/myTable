@@ -12,9 +12,11 @@ export default {
     xl: "18px",
   },
   padding: {
+    xs: "2px",
     sm: "5px",
     md: "8px",
     lg: "12px",
+    xl: "15px",
   },
   margin: {
     sm: "5px",
