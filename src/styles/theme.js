@@ -27,6 +27,7 @@ export default {
   trans: {
     xsm: ".05s",
     sm: ".1s",
+    lg: ".2s",
   },
   theme: {
     good: COLORS.green,
@@ -34,6 +35,7 @@ export default {
     bad: COLORS.red,
     badAction: COLORS.darkRed,
     badDisabled: COLORS.lightRed,
+    offBright: COLORS.offWhite,
     bright: COLORS.white,
     medium: COLORS.gray,
     mediumLight: COLORS.medGray,

@@ -6,15 +6,14 @@ import PropTypes from "prop-types";
 const id = "__ContentCard";
 const iconWidth = "70px";
 
-const ContentCard = ({ icon = null, children }) => {
+const ContentCard = ({ icon = null, children, background = "#fff" }) => {
   return (
-    <StyledContentCard iconWidth={icon ? iconWidth : "0px"}>
+    <StyledContentCard
+      iconWidth={icon ? iconWidth : "0px"}
+      background={background}
+    >
       {icon && <div {...klass({}, "icon", id)}>{icon}</div>}
-      <div {...klass({}, "content", id)}>
-        {
-          children
-        }
-      </div>
+      <div {...klass({}, "content", id)}>{children}</div>
     </StyledContentCard>
   );
 };
@@ -26,7 +25,7 @@ export default ContentCard;
 const StyledContentCard = styled.div`
   width: 96%;
   margin: ${THEME.margin.lg} auto;
-  background-color: #fff;
+  background-color: ${(p) => p.background};
   border-radius: ${THEME.radius.md};
   display: flex;
   justify-content: space-between;
